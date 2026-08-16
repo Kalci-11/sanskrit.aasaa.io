@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanskrit · Unit 2 · Diya Lamps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#14133B;
+    --bg-deep2:#1E1C56;
+    --panel:#201F5C;
+    --marigold:#FFA630;
+    --peacock:#12A5A0;
+    --lotus:#FF6B9D;
+    --amethyst:#9B7CFF;
+    --leaf:#4CD08A;
+    --gold:#FFD166;
+    --cream:#FFF6E4;
+    --cream-dim:#C9C6EC;
+    --danger:#FF5C6C;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% -10%, #3B2E86 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 0%, #2A1F6E 0%, transparent 50%),
+      linear-gradient(180deg, var(--bg-deep) 0%, #0F0E2E 100%);
+    min-height:100vh;
+    font-family:'Poppins', sans-serif;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+  .sa{font-family:'Baloo 2','Noto Sans Devanagari',sans-serif;}
+  .sa-read{font-family:'Noto Sans Devanagari','Baloo 2',sans-serif;}
+
+  /* background rangoli dots */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: radial-gradient(circle, rgba(255,214,102,0.10) 1px, transparent 1.6px);
+    background-size: 26px 26px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  #app{
+    position:relative; z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:18px 16px 60px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .brand{display:flex; flex-direction:column; line-height:1.05;}
+  .brand .title-sa{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:26px;
+    color:var(--gold);
+    letter-spacing:0.5px;
+  }
+  .brand .title-en{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--cream-dim);
+    margin-top:2px;
+  }
+  .xp-badge{
+    display:flex; align-items:center; gap:6px;
+    background:linear-gradient(135deg, #2A2870, #201F5C);
+    border:1px solid rgba(255,214,102,0.35);
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    white-space:nowrap;
+  }
+  .xp-badge .star{color:var(--gold); font-size:16px;}
+
+  /* ---------- DIYA ROW (signature element) ---------- */
+  .diya-strip{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:var(--radius);
+    padding:16px 10px 10px;
+    margin-bottom:22px;
+    position:relative;
+  }
+  .diya-strip .strip-label{
+    position:absolute; top:-11px; left:16px;
+    background:var(--bg-deep);
+    padding:0 8px;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+  }
+  .diyas{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:4px;
+    padding:6px 4px 0;
+  }
+  .diya{
+    display:flex; flex-direction:column; align-items:center;
+    flex:1;
+    cursor:pointer;
+    user-select:none;
+  }
+  .diya .flame-wrap{
+    height:22px;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .diya .flame{
+    width:9px; height:9px;
+    background:#4a4770;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform:rotate(180deg) scale(0.7);
+    opacity:0.5;
+    transition:all .3s ease;
+  }
+  .diya.lit .flame{
+    background:radial-gradient(circle at 50% 70%, #fff6cf 0%, var(--gold) 45%, var(--marigold) 85%);
+    box-shadow:0 0 10px 3px rgba(255,166,48,0.75), 0 0 22px 6px rgba(255,209,102,0.35);
+    opacity:1;
+    animation:flicker 1.8s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%,100%{transform:rotate(180deg) scale(1) translateX(0);}
+    25%{transform:rotate(178deg) scale(1.05) translateX(-0.5px);}
+    50%{transform:rotate(182deg) scale(0.95) translateX(0.5px);}
+    75%{transform:rotate(179deg) scale(1.03) translateX(-0.3px);}
+  }
+  .diya .base{
+    width:26px; height:12px;
+    border-radius:0 0 14px 14px / 0 0 10px 10px;
+    background:linear-gradient(180deg, var(--diya-color,#5b5698), #3a3770);
+    margin-top:2px;
+    box-shadow: inset 0 -3px 4px rgba(0,0,0,0.25);
+  }
+  .diya.lit .base{
+    background:linear-gradient(180deg, var(--diya-color), #33306b);
+    box-shadow:0 0 12px -1px var(--diya-color), inset 0 -3px 4px rgba(0,0,0,0.25);
+  }
+  .diya .num{
+    margin-top:6px;
+    font-size:11px;
+    color:var(--cream-dim);
+    font-weight:600;
+  }
+  .diya.lit .num{color:var(--gold);}
+
+  /* ---------- SCREENS ---------- */
+  .screen{display:none;}
+  .screen.active{display:block; animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+
+  /* home cards */
+  .lesson-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .lesson-card{
+    background:linear-gradient(160deg, var(--panel), #191756);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:var(--radius);
+    padding:16px 14px 14px;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:transform .15s ease, box-shadow .15s ease;
+    min-height:150px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .lesson-card:hover{transform:translateY(-3px); box-shadow:0 10px 22px -8px rgba(0,0,0,0.5);}
+  .lesson-card:active{transform:translateY(0px) scale(0.98);}
+  .lesson-card::after{
+    content:"";
+    position:absolute; top:-30px; right:-30px;
+    width:90px; height:90px;
+    border-radius:50%;
+    background:var(--accent);
+    opacity:0.16;
+  }
+  .lesson-card .lc-top{display:flex; justify-content:space-between; align-items:flex-start;}
+  .lesson-card .lc-num{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    color:var(--accent);
+    background:rgba(255,255,255,0.07);
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .lesson-card .lc-stars{font-size:12px; color:var(--gold); letter-spacing:1px;}
+  .lesson-card .lc-title-sa{
+    font-family:'Baloo 2',sans-serif;
+    font-size:19px;
+    font-weight:700;
+    margin-top:10px;
+    color:var(--cream);
+    line-height:1.25;
+  }
+  .lesson-card .lc-title-en{
+    font-size:11.5px;
+    color:var(--cream-dim);
+    margin-top:3px;
+  }
+  .lesson-card .lc-cta{
+    margin-top:12px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--accent);
+    display:flex; align-items:center; gap:5px;
+  }
+
+  .home-hero{
+    text-align:center;
+    padding:6px 6px 20px;
+  }
+  .home-hero .om{font-size:13px; letter-spacing:3px; color:var(--marigold); text-transform:uppercase; font-weight:600;}
+  .home-hero h1{
+    font-family:'Baloo 2',sans-serif;
+    font-size:22px;
+    margin:6px 0 4px;
+    color:var(--cream);
+  }
+  .home-hero p{font-size:13px; color:var(--cream-dim); margin:0;}
+
+  /* ---------- LESSON SCREEN ---------- */
+  .lesson-header{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:16px;
+  }
+  .back-btn{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--cream);
+    width:36px; height:36px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    font-size:16px;
+    flex-shrink:0;
+  }
+  .back-btn:hover{background:rgba(255,255,255,0.15);}
+  .lesson-header .lh-title-sa{font-family:'Baloo 2',sans-serif; font-size:19px; font-weight:700;}
+  .lesson-header .lh-title-en{font-size:11px; color:var(--cream-dim);}
+
+  .tabs{
+    display:flex; gap:8px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.09);
+    color:var(--cream-dim);
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .tab-btn.active{
+    background:var(--accent);
+    color:#14133B;
+    border-color:transparent;
+  }
+
+  .card-panel{
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+
+  /* chart table (reference) */
+  .chart-title{font-family:'Baloo 2',sans-serif; font-size:16px; margin:0 0 10px; color:var(--gold);}
+  table.ref-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:18px;
+    font-size:13.5px;
+  }
+  table.ref-table th, table.ref-table td{
+    padding:8px 6px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.09);
+  }
+  table.ref-table th{
+    background:rgba(255,255,255,0.06);
+    color:var(--cream-dim);
+    font-weight:600;
+    font-size:11.5px;
+  }
+  table.ref-table td.sa-cell{font-family:'Noto Sans Devanagari',sans-serif; font-size:15px; color:var(--cream);}
+  table.ref-table td.lbl-cell{color:var(--cream-dim); font-size:11.5px; text-align:left;}
+  .continue-btn-wrap{text-align:center; margin-top:6px;}
+
+  /* flashcards */
+  .flash-progress{
+    text-align:center;
+    font-size:12px;
+    color:var(--cream-dim);
+    margin-bottom:10px;
+    letter-spacing:1px;
+  }
+  .flash-scene{
+    perspective:1200px;
+    margin:0 auto 18px;
+    max-width:420px;
+  }
+  .flash-card{
+    position:relative;
+    height:220px;
+    transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .flash-card.flipped{transform:rotateY(180deg);}
+  .flash-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border-radius:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:18px;
+    text-align:center;
+  }
+  .flash-face.front{
+    background:linear-gradient(155deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #1b1a4d));
+    color:#14132f;
+  }
+  .flash-face.front .fc-word{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    font-size:44px;
+  }
+  .flash-face.front .fc-tap{
+    margin-top:10px; font-size:11.5px; font-weight:600; opacity:0.7;
+    text-transform:uppercase; letter-spacing:1.5px;
+  }
+  .flash-face.back{
+    background:#2A2870;
+    border:1px solid rgba(255,255,255,0.1);
+    transform:rotateY(180deg);
+  }
+  .flash-face.back .fc-mean{
+    font-family:'Baloo 2',sans-serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--gold);
+  }
+  .flash-face.back .fc-hint{
+    margin-top:10px;
+    font-size:13px;
+    color:var(--cream-dim);
+    font-family:'Noto Sans Devanagari',sans-serif;
+    line-height:1.5;
+  }
+  .flash-nav{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+  }
+  .nav-circle{
+    width:42px; height:42px; border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--cream);
+    font-size:16px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .nav-circle:hover{background:rgba(255,255,255,0.16);}
+  .nav-circle[disabled]{opacity:0.3; cursor:default;}
+  .primary-btn{
+    background:linear-gradient(135deg, var(--marigold), #FF7A30);
+    color:#221200;
+    border:none;
+    font-weight:700;
+    font-size:14px;
+    padding:12px 22px;
+    border-radius:999px;
+    cursor:pointer;
+    box-shadow:0 6px 16px -6px rgba(255,124,48,0.6);
+  }
+  .primary-btn:hover{filter:brightness(1.06);}
+  .ghost-btn{
+    background:transparent;
+    color:var(--cream-dim);
+    border:1px solid rgba(255,255,255,0.18);
+    font-weight:600;
+    font-size:13px;
+    padding:11px 20px;
+    border-radius:999px;
+    cursor:pointer;
+  }
+  .ghost-btn:hover{color:var(--cream); border-color:rgba(255,255,255,0.4);}
+
+  .flash-actions{text-align:center; margin-top:18px;}
+
+  /* quiz */
+  .quiz-dots{display:flex; gap:6px; justify-content:center; margin-bottom:16px;}
+  .quiz-dots .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:rgba(255,255,255,0.15);
+  }
+  .quiz-dots .dot.done{background:var(--peacock);}
+  .quiz-dots .dot.current{background:var(--gold); transform:scale(1.3);}
+  .quiz-dots .dot.wrong{background:var(--danger);}
+
+  .quiz-q{
+    font-family:'Noto Sans Devanagari',sans-serif;
+    font-size:20px;
+    text-align:center;
+    margin-bottom:22px;
+    color:var(--cream);
+    line-height:1.5;
+  }
+  .quiz-q .en-hint{display:block; font-family:'Poppins',sans-serif; font-size:11.5px; color:var(--cream-dim); margin-top:6px; letter-spacing:0.5px;}
+  .quiz-options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .opt-btn{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    color:var(--cream);
+    font-family:'Noto Sans Devanagari',sans-serif;
+    font-size:17px;
+    padding:16px 10px;
+    border-radius:14px;
+    cursor:pointer;
+    text-align:center;
+    transition:all .15s ease;
+  }
+  .opt-btn:hover{background:rgba(255,255,255,0.1);}
+  .opt-btn.correct{
+    background:rgba(76,208,138,0.18);
+    border-color:var(--leaf);
+    color:var(--leaf);
+    animation:pop .3s ease;
+  }
+  .opt-btn.wrong{
+    background:rgba(255,92,108,0.15);
+    border-color:var(--danger);
+    color:var(--danger);
+    animation:shake .35s ease;
+  }
+  .opt-btn[disabled]{cursor:default;}
+  @keyframes pop{0%{transform:scale(1);} 50%{transform:scale(1.05);} 100%{transform:scale(1);}}
+  @keyframes shake{0%,100%{transform:translateX(0);} 25%{transform:translateX(-5px);} 75%{transform:translateX(5px);}}
+
+  .quiz-feedback{
+    text-align:center;
+    min-height:22px;
+    margin-top:16px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .quiz-feedback.ok{color:var(--leaf);}
+  .quiz-feedback.no{color:var(--danger);}
+
+  .quiz-actions{text-align:center; margin-top:16px;}
+
+  /* results */
+  .results-wrap{text-align:center; padding:10px 0 4px;}
+  .results-stars{font-size:40px; letter-spacing:8px; margin:6px 0 14px;}
+  .results-stars span{color:rgba(255,255,255,0.15);}
+  .results-stars span.on{color:var(--gold); text-shadow:0 0 14px rgba(255,209,102,0.6);}
+  .results-score{font-family:'Baloo 2',sans-serif; font-size:26px; font-weight:700; color:var(--cream);}
+  .results-sub{font-size:13px; color:var(--cream-dim); margin:4px 0 22px;}
+  .results-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+
+  footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:11px;
+    color:rgba(201,198,236,0.4);
+    letter-spacing:0.5px;
+  }
+
+  @media (max-width:480px){
+    .lesson-grid{grid-template-columns:1fr;}
+    .quiz-options{grid-template-columns:1fr;}
+    .flash-face.front .fc-word{font-size:36px;}
+    .brand .title-sa{font-size:22px;}
+    .flash-card{height:200px;}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="brand">
+      <div class="title-sa sa">संस्कृतम्</div>
+      <div class="title-en">Unit 2 · Diya Lamp Practice</div>
+    </div>
+    <div class="xp-badge"><span class="star">★</span><span id="xpCount">0</span> stars</div>
+  </header>
+
+  <div class="diya-strip">
+    <div class="strip-label">Your Progress</div>
+    <div class="diyas" id="diyaRow"></div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <main class="screen active" id="screen-home">
+    <div class="home-hero">
+      <div class="om">॥ शुभम् भवतु ॥</div>
+      <h1 class="sa">Five Lessons, Five Lamps to Light</h1>
+      <p>Learn each lesson, practice it, and light your lamp</p>
+    </div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </main>
+
+  <!-- LESSON SCREEN -->
+  <main class="screen" id="screen-lesson">
+    <div class="lesson-header">
+      <div class="back-btn" onclick="goHome()">←</div>
+      <div>
+        <div class="lh-title-sa sa" id="lhTitleSa"></div>
+        <div class="lh-title-en" id="lhTitleEn"></div>
+      </div>
+    </div>
+
+    <div class="tabs" id="lessonTabs"></div>
+
+    <div class="card-panel" id="lessonBody"></div>
+  </main>
+
+  <footer>Built for Class 5 · Unit 2 syllabus · Practice makes everything possible</footer>
+</div>
+
+<script>
+/* ======================= DATA ======================= */
+const LESSONS = [
+  {
+    id:1, accent:'var(--marigold)', accentHex:'#FFA630',
+    titleSa:'अहं च त्वं च', titleEn:'Pronouns — I & You',
+    type:'vocab',
+    flashcards:[
+      {front:'अहम्', back:'मैं (I)', hint:'अहं छात्रः अस्मि। — I am a student.'},
+      {front:'त्वम्', back:'तुम (You)', hint:'त्वं कुत्र असि? — Where are you?'},
+      {front:'सः', back:'वह — पुरुष (He)', hint:'सः शिक्षकः अस्ति। — He is a teacher.'},
+      {front:'सा', back:'वह — स्त्री (She)', hint:'सा गच्छति। — She goes.'},
+      {front:'तत्', back:'वह — वस्तु (It)', hint:'तत् पुस्तकम् अस्ति। — That is a book.'},
+      {front:'वयम्', back:'हम (We)', hint:'वयं क्रीडामः। — We play.'},
+      {front:'यूयम्', back:'तुम सब (You all)', hint:'यूयं कुत्र गच्छथ? — Where are you all going?'},
+      {front:'ते', back:'वे (They)', hint:'ते पठन्ति। — They read.'}
+    ],
+    quiz:[
+      {q:"What does 'अहम्' mean?", opts:['I','You','We','He'], answer:0},
+      {q:"How do you say 'You' in Sanskrit?", opts:['त्वम्','अहम्','सः','वयम्'], answer:0},
+      {q:"What does 'सः' mean?", opts:['She','He','I','You all'], answer:1},
+      {q:"How do you say 'We' in Sanskrit?", opts:['वयम्','यूयम्','ते','अहम्'], answer:0},
+      {q:"What does 'सा' mean?", opts:['He','They','She','You'], answer:2},
+      {q:"How do you say 'They' in Sanskrit?", opts:['ते','सः','सा','तत्'], answer:0},
+      {q:"What does 'तत्' mean?", opts:['I','We','It','You'], answer:2},
+      {q:"How do you say 'You all' in Sanskrit?", opts:['यूयम्','वयम्','त्वम्','ते'], answer:0}
+    ]
+  },
+  {
+    id:2, accent:'var(--peacock)', accentHex:'#12A5A0',
+    titleSa:'संख्या (१–१०)', titleEn:'Numbers 1–10',
+    type:'vocab',
+    flashcards:[
+      {front:'एकम्',back:'1 (One)',hint:'Counting word for 1'},
+      {front:'द्वे',back:'2 (Two)',hint:'Counting word for 2'},
+      {front:'त्रीणि',back:'3 (Three)',hint:'Counting word for 3'},
+      {front:'चत्वारि',back:'4 (Four)',hint:'Counting word for 4'},
+      {front:'पञ्च',back:'5 (Five)',hint:'Counting word for 5'},
+      {front:'षट्',back:'6 (Six)',hint:'Counting word for 6'},
+      {front:'सप्त',back:'7 (Seven)',hint:'Counting word for 7'},
+      {front:'अष्ट',back:'8 (Eight)',hint:'Counting word for 8'},
+      {front:'नव',back:'9 (Nine)',hint:'Counting word for 9'},
+      {front:'दश',back:'10 (Ten)',hint:'Counting word for 10'}
+    ],
+    quiz:[
+      {q:'5 = ?', opts:['पञ्च','चत्वारि','षट्','सप्त'], answer:0},
+      {q:"Which number does 'दश' mean?", opts:['8','9','10','7'], answer:2},
+      {q:'3 = ?', opts:['द्वे','त्रीणि','चत्वारि','एकम्'], answer:1},
+      {q:"Which number does 'अष्ट' mean?", opts:['6','7','8','9'], answer:2},
+      {q:'9 = ?', opts:['नव','अष्ट','सप्त','दश'], answer:0},
+      {q:"Which number does 'षट्' mean?", opts:['5','6','7','8'], answer:1},
+      {q:'1 = ?', opts:['द्वे','एकम्','त्रीणि','दश'], answer:1},
+      {q:"Which number does 'चत्वारि' mean?", opts:['3','4','5','6'], answer:1},
+      {q:'7 = ?', opts:['षट्','सप्त','अष्ट','नव'], answer:1},
+      {q:'10 = ?', opts:['नव','अष्ट','दश','सप्त'], answer:2}
+    ]
+  },
+  {
+    id:3, accent:'var(--lotus)', accentHex:'#FF6B9D',
+    titleSa:'देव, लता शब्द रूप', titleEn:'Noun Forms — Cases 1 to 3',
+    type:'table',
+    chart:[
+      {
+        title:'देव शब्द (पुंल्लिङ्ग, अकारान्त)',
+        rows:[
+          ['प्रथमा','देवः','देवौ','देवाः'],
+          ['द्वितीया','देवम्','देवौ','देवान्'],
+          ['तृतीया','देवेन','देवाभ्याम्','देवैः']
+        ]
+      },
+      {
+        title:'लता शब्द (स्त्रीलिङ्ग, आकारान्त)',
+        rows:[
+          ['प्रथमा','लता','लते','लताः'],
+          ['द्वितीया','लताम्','लते','लताः'],
+          ['तृतीया','लतया','लताभ्याम्','लताभिः']
+        ]
+      }
+    ],
+    flashcards:[
+      {front:'देवः',back:'देव — प्रथमा, एकवचन',hint:'The nominative singular form of देव.'},
+      {front:'देवौ',back:'देव — प्रथमा, द्विवचन',hint:'The nominative dual form of देव.'},
+      {front:'देवाः',back:'देव — प्रथमा, बहुवचन',hint:'The nominative plural form of देव.'},
+      {front:'देवम्',back:'देव — द्वितीया, एकवचन',hint:'The accusative singular form of देव.'},
+      {front:'देवान्',back:'देव — द्वितीया, बहुवचन',hint:'The accusative plural form of देव.'},
+      {front:'देवेन',back:'देव — तृतीया, एकवचन',hint:'The instrumental singular form of देव.'},
+      {front:'देवैः',back:'देव — तृतीया, बहुवचन',hint:'The instrumental plural form of देव.'},
+      {front:'लता',back:'लता — प्रथमा, एकवचन',hint:'The nominative singular form of लता.'},
+      {front:'लते',back:'लता — प्रथमा, द्विवचन',hint:'The nominative dual form of लता.'},
+      {front:'लताः',back:'लता — प्रथमा, बहुवचन',hint:'The nominative plural form of लता.'},
+      {front:'लताम्',back:'लता — द्वितीया, एकवचन',hint:'The accusative singular form of लता.'},
+      {front:'लतया',back:'लता — तृतीया, एकवचन',hint:'The instrumental singular form of लता.'},
+      {front:'लताभ्याम्',back:'लता — तृतीया, द्विवचन',hint:'The instrumental dual form of लता.'},
+      {front:'लताभिः',back:'लता — तृतीया, बहुवचन',hint:'The instrumental plural form of लता.'}
+    ],
+    quiz:[
+      {q:'देव — प्रथमा, एकवचन', opts:['देवः','देवौ','देवाः','देवम्'], answer:0},
+      {q:'देव — तृतीया, बहुवचन', opts:['देवेन','देवैः','देवान्','देवाभ्याम्'], answer:1},
+      {q:'देव — द्वितीया, एकवचन', opts:['देवः','देवम्','देवौ','देवेन'], answer:1},
+      {q:'देव — प्रथमा, बहुवचन', opts:['देवाः','देवान्','देवैः','देवौ'], answer:0},
+      {q:'लता — प्रथमा, एकवचन', opts:['लते','लताः','लता','लताम्'], answer:2},
+      {q:'लता — तृतीया, एकवचन', opts:['लतया','लताम्','लते','लताभिः'], answer:0},
+      {q:'लता — द्वितीया, बहुवचन', opts:['लताः','लताभिः','लताम्','लते'], answer:0},
+      {q:'लता — तृतीया, द्विवचन', opts:['लताभिः','लताभ्याम्','लतया','लते'], answer:1},
+      {q:'देव — तृतीया, एकवचन', opts:['देवेन','देवैः','देवम्','देवाभ्याम्'], answer:0},
+      {q:'देव — द्वितीया, बहुवचन', opts:['देवाः','देवान्','देवौ','देवैः'], answer:1}
+    ]
+  },
+  {
+    id:4, accent:'var(--amethyst)', accentHex:'#9B7CFF',
+    titleSa:'किम् शब्द (तीनों लिंग)', titleEn:'Kim — 3 Genders, Cases 1 to 3',
+    type:'table',
+    chart:[
+      {title:'किम् — पुंल्लिङ्ग (कः)', rows:[
+        ['प्रथमा','कः','कौ','के'],
+        ['द्वितीया','कम्','कौ','कान्'],
+        ['तृतीया','केन','काभ्याम्','कैः']
+      ]},
+      {title:'किम् — स्त्रीलिङ्ग (का)', rows:[
+        ['प्रथमा','का','के','काः'],
+        ['द्वितीया','काम्','के','काः'],
+        ['तृतीया','कया','काभ्याम्','काभिः']
+      ]},
+      {title:'किम् — नपुंसकलिङ्ग (किम्)', rows:[
+        ['प्रथमा','किम्','के','कानि'],
+        ['द्वितीया','किम्','के','कानि'],
+        ['तृतीया','केन','काभ्याम्','कैः']
+      ]}
+    ],
+    flashcards:[
+      {front:'कः',back:'पुं. — प्रथमा, एकवचन',hint:'Masculine nominative singular of किम्.'},
+      {front:'कौ',back:'पुं. — प्रथमा, द्विवचन',hint:'Masculine nominative dual of किम्.'},
+      {front:'के',back:'पुं. — प्रथमा, बहुवचन',hint:'Masculine nominative plural of किम्.'},
+      {front:'कम्',back:'पुं. — द्वितीया, एकवचन',hint:'Masculine accusative singular of किम्.'},
+      {front:'कान्',back:'पुं. — द्वितीया, बहुवचन',hint:'Masculine accusative plural of किम्.'},
+      {front:'केन',back:'पुं. — तृतीया, एकवचन',hint:'Masculine instrumental singular of किम्.'},
+      {front:'कैः',back:'पुं. — तृतीया, बहुवचन',hint:'Masculine instrumental plural of किम्.'},
+      {front:'का',back:'स्त्री. — प्रथमा, एकवचन',hint:'Feminine nominative singular of किम्.'},
+      {front:'काः',back:'स्त्री. — प्रथमा, बहुवचन',hint:'Feminine nominative plural of किम्.'},
+      {front:'काम्',back:'स्त्री. — द्वितीया, एकवचन',hint:'Feminine accusative singular of किम्.'},
+      {front:'कया',back:'स्त्री. — तृतीया, एकवचन',hint:'Feminine instrumental singular of किम्.'},
+      {front:'काभिः',back:'स्त्री. — तृतीया, बहुवचन',hint:'Feminine instrumental plural of किम्.'},
+      {front:'किम्',back:'नपुं. — प्रथमा/द्वितीया, एकवचन',hint:'Neuter nominative/accusative singular of किम्.'},
+      {front:'कानि',back:'नपुं. — प्रथमा/द्वितीया, बहुवचन',hint:'Neuter nominative/accusative plural of किम्.'}
+    ],
+    quiz:[
+      {q:'किम् (पुं.) — प्रथमा, एकवचन', opts:['कः','का','किम्','कौ'], answer:0},
+      {q:'किम् (पुं.) — तृतीया, बहुवचन', opts:['केन','कैः','काभिः','कान्'], answer:1},
+      {q:'किम् (स्त्री.) — प्रथमा, एकवचन', opts:['कः','का','के','किम्'], answer:1},
+      {q:'किम् (स्त्री.) — द्वितीया, एकवचन', opts:['काम्','का','कया','के'], answer:0},
+      {q:'किम् (नपुं.) — प्रथमा, बहुवचन', opts:['के','कानि','काः','कान्'], answer:1},
+      {q:'किम् (पुं.) — द्वितीया, बहुवचन', opts:['के','कान्','कैः','कौ'], answer:1},
+      {q:'किम् (स्त्री.) — तृतीया, एकवचन', opts:['केन','कया','कैः','काभ्याम्'], answer:1},
+      {q:'किम् (पुं.) — प्रथमा, द्विवचन', opts:['के','कौ','कः','कम्'], answer:1},
+      {q:'किम् (नपुं.) — तृतीया, एकवचन', opts:['केन','किम्','कया','कानि'], answer:0},
+      {q:'किम् (स्त्री.) — प्रथमा, बहुवचन', opts:['के','काः','कानि','कैः'], answer:1}
+    ]
+  },
+  {
+    id:5, accent:'var(--leaf)', accentHex:'#4CD08A',
+    titleSa:'कृ, चल् धातु रूप', titleEn:'Verb Forms — Present Tense (लट् लकार)',
+    type:'table',
+    chart:[
+      {title:'कृ धातु (to do) — लट् लकार', rows:[
+        ['प्रथमपुरुष','करोति','कुरुतः','कुर्वन्ति'],
+        ['मध्यमपुरुष','करोषि','कुरुथः','कुरुथ'],
+        ['उत्तमपुरुष','करोमि','कुर्वः','कुर्मः']
+      ]},
+      {title:'चल् धातु (to move) — लट् लकार', rows:[
+        ['प्रथमपुरुष','चलति','चलतः','चलन्ति'],
+        ['मध्यमपुरुष','चलसि','चलथः','चलथ'],
+        ['उत्तमपुरुष','चलामि','चलावः','चलामः']
+      ]}
+    ],
+    flashcards:[
+      {front:'करोति',back:'कृ — प्रथमपुरुष, एकवचन',hint:'He/She does. (present tense)'},
+      {front:'कुरुतः',back:'कृ — प्रथमपुरुष, द्विवचन',hint:'They two do.'},
+      {front:'कुर्वन्ति',back:'कृ — प्रथमपुरुष, बहुवचन',hint:'They (many) do.'},
+      {front:'करोषि',back:'कृ — मध्यमपुरुष, एकवचन',hint:'You do.'},
+      {front:'कुरुथ',back:'कृ — मध्यमपुरुष, बहुवचन',hint:'You all do.'},
+      {front:'करोमि',back:'कृ — उत्तमपुरुष, एकवचन',hint:'I do.'},
+      {front:'कुर्मः',back:'कृ — उत्तमपुरुष, बहुवचन',hint:'We do.'},
+      {front:'चलति',back:'चल् — प्रथमपुरुष, एकवचन',hint:'He/She moves.'},
+      {front:'चलतः',back:'चल् — प्रथमपुरुष, द्विवचन',hint:'They two move.'},
+      {front:'चलन्ति',back:'चल् — प्रथमपुरुष, बहुवचन',hint:'They (many) move.'},
+      {front:'चलसि',back:'चल् — मध्यमपुरुष, एकवचन',hint:'You move.'},
+      {front:'चलामि',back:'चल् — उत्तमपुरुष, एकवचन',hint:'I move.'},
+      {front:'चलावः',back:'चल् — उत्तमपुरुष, द्विवचन',hint:'We two move.'},
+      {front:'चलामः',back:'चल् — उत्तमपुरुष, बहुवचन',hint:'We (many) move.'}
+    ],
+    quiz:[
+      {q:'कृ — उत्तमपुरुष, एकवचन (I do)', opts:['करोति','करोमि','करोषि','कुर्मः'], answer:1},
+      {q:'कृ — प्रथमपुरुष, बहुवचन (They do)', opts:['कुरुतः','कुर्वन्ति','करोन्ति','कुरुथ'], answer:1},
+      {q:'कृ — मध्यमपुरुष, एकवचन (You do)', opts:['करोषि','करोमि','करोति','कुरुथः'], answer:0},
+      {q:'चल् — प्रथमपुरुष, एकवचन (He moves)', opts:['चलामि','चलसि','चलति','चलन्ति'], answer:2},
+      {q:'चल् — उत्तमपुरुष, बहुवचन (We move)', opts:['चलावः','चलामः','चलथ','चलामि'], answer:1},
+      {q:'चल् — मध्यमपुरुष, एकवचन (You move)', opts:['चलसि','चलति','चलामि','चलथः'], answer:0},
+      {q:'कृ — उत्तमपुरुष, बहुवचन (We do)', opts:['कुर्वः','कुर्मः','कुरुथ','करोमि'], answer:1},
+      {q:'चल् — प्रथमपुरुष, बहुवचन (They move)', opts:['चलतः','चलन्ति','चलथ','चलामः'], answer:1},
+      {q:'कृ — प्रथमपुरुष, एकवचन (He does)', opts:['करोति','करोमि','कुरुतः','करोषि'], answer:0},
+      {q:'चल् — उत्तमपुरुष, द्विवचन (We two move)', opts:['चलावः','चलामः','चलतः','चलसि'], answer:0}
+    ]
+  }
+];
+
+/* ======================= STATE ======================= */
+const state = {
+  xp:0,
+  progress:{}, // id -> {stars, done}
+  currentLessonId:null,
+  mode:'chart', // chart | learn | quiz
+  cardIndex:0,
+  flipped:false,
+  quizIndex:0,
+  quizCorrectCount:0,
+  quizAnswers:[] // 'correct' | 'wrong' | null
+};
+LESSONS.forEach(l => state.progress[l.id] = {stars:0, done:false});
+
+/* ======================= RENDER: HOME ======================= */
+function renderDiyas(){
+  const row = document.getElementById('diyaRow');
+  row.innerHTML = LESSONS.map(l => {
+    const lit = state.progress[l.id].done;
+    return `<div class="diya ${lit?'lit':''}" style="--diya-color:${l.accentHex}" onclick="openLesson(${l.id})">
+      <div class="flame-wrap"><div class="flame"></div></div>
+      <div class="base"></div>
+      <div class="num">${l.id}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderHome(){
+  const grid = document.getElementById('lessonGrid');
+  grid.innerHTML = LESSONS.map(l => {
+    const p = state.progress[l.id];
+    const stars = '★★★'.slice(0,p.stars) + '☆☆☆'.slice(0, 3-p.stars);
+    return `<div class="lesson-card" style="--accent:${l.accentHex}" onclick="openLesson(${l.id})">
+      <div class="lc-top">
+        <div class="lc-num">Lesson ${l.id}</div>
+        <div class="lc-stars">${p.done ? stars : ''}</div>
+      </div>
+      <div>
+        <div class="lc-title-sa sa">${l.titleSa}</div>
+        <div class="lc-title-en">${l.titleEn}</div>
+      </div>
+      <div class="lc-cta">${p.done ? 'Practice again' : 'Start learning'} →</div>
+    </div>`;
+  }).join('');
+  document.getElementById('xpCount').textContent = state.xp;
+}
+
+function goHome(){
+  document.getElementById('screen-lesson').classList.remove('active');
+  document.getElementById('screen-home').classList.add('active');
+  renderHome();
+  renderDiyas();
+}
+
+/* ======================= LESSON NAV ======================= */
+function getLesson(id){ return LESSONS.find(l => l.id === id); }
+
+function openLesson(id){
+  state.currentLessonId = id;
+  const lesson = getLesson(id);
+  document.getElementById('screen-home').classList.remove('active');
+  document.getElementById('screen-lesson').classList.add('active');
+  document.getElementById('lhTitleSa').textContent = `Lesson ${lesson.id} · ${lesson.titleSa}`;
+  document.getElementById('lhTitleEn').textContent = lesson.titleEn;
+  document.documentElement.style.setProperty('--accent', lesson.accentHex);
+
+  const tabs = document.getElementById('lessonTabs');
+  const tabList = [];
+  if(lesson.type === 'table') tabList.push({key:'chart', label:'View Chart'});
+  tabList.push({key:'learn', label:'Flashcards'});
+  tabList.push({key:'quiz', label:'Quiz'});
+  tabs.innerHTML = tabList.map(t => `<div class="tab-btn" data-key="${t.key}" onclick="switchTab('${t.key}')">${t.label}</div>`).join('');
+
+  state.mode = lesson.type === 'table' ? 'chart' : 'learn';
+  state.cardIndex = 0; state.flipped = false;
+  switchTab(state.mode);
+}
+
+function switchTab(key){
+  state.mode = key;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+  const lesson = getLesson(state.currentLessonId);
+  if(key === 'chart') renderChart(lesson);
+  else if(key === 'learn'){ state.cardIndex = 0; state.flipped = false; renderFlashcards(lesson); }
+  else if(key === 'quiz') startQuiz(lesson);
+}
+
+/* ======================= CHART VIEW ======================= */
+function renderChart(lesson){
+  const body = document.getElementById('lessonBody');
+  const tablesHtml = lesson.chart.map(t => `
+    <div class="chart-title sa">${t.title}</div>
+    <table class="ref-table">
+      <tr><th></th><th>एकवचन<br>(Singular)</th><th>द्विवचन<br>(Dual)</th><th>बहुवचन<br>(Plural)</th></tr>
+      ${t.rows.map(r => `<tr><td class="lbl-cell">${r[0]}</td><td class="sa-cell">${r[1]}</td><td class="sa-cell">${r[2]}</td><td class="sa-cell">${r[3]}</td></tr>`).join('')}
+    </table>
+  `).join('');
+  body.innerHTML = `${tablesHtml}
+    <div class="continue-btn-wrap">
+      <button class="primary-btn" onclick="switchTab('learn')">Continue — Flashcards →</button>
+    </div>`;
+}
+
+/* ======================= FLASHCARDS ======================= */
+function renderFlashcards(lesson){
+  const body = document.getElementById('lessonBody');
+  const cards = lesson.flashcards;
+  const i = state.cardIndex;
+  const c = cards[i];
+  body.innerHTML = `
+    <div class="flash-progress">Card ${i+1} / ${cards.length} · Tap to flip</div>
+    <div class="flash-scene">
+      <div class="flash-card ${state.flipped?'flipped':''}" id="flashCard" onclick="flipCard()">
+        <div class="flash-face front" style="--accent:${lesson.accentHex}">
+          <div class="fc-word sa">${c.front}</div>
+          <div class="fc-tap">Tap</div>
+        </div>
+        <div class="flash-face back">
+          <div class="fc-mean sa">${c.back}</div>
+          <div class="fc-hint">${c.hint}</div>
+        </div>
+      </div>
+    </div>
+    <div class="flash-nav">
+      <div class="nav-circle" onclick="prevCard(event)" ${i===0?'disabled':''}>←</div>
+      <button class="ghost-btn" onclick="flipCard()">Flip</button>
+      <div class="nav-circle" onclick="nextCard(event)" ${i===cards.length-1?'disabled':''}>→</div>
+    </div>
+    <div class="flash-actions">
+      <button class="primary-btn" onclick="switchTab('quiz')">Start Quiz →</button>
+    </div>
+  `;
+  document.documentElement.style.setProperty('--accent', lesson.accentHex);
+}
+function flipCard(){ state.flipped = !state.flipped; const el = document.getElementById('flashCard'); if(el) el.classList.toggle('flipped', state.flipped); }
+function prevCard(e){ e.stopPropagation(); if(state.cardIndex>0){ state.cardIndex--; state.flipped=false; renderFlashcards(getLesson(state.currentLessonId)); } }
+function nextCard(e){ e.stopPropagation(); const lesson = getLesson(state.currentLessonId); if(state.cardIndex < lesson.flashcards.length-1){ state.cardIndex++; state.flipped=false; renderFlashcards(lesson); } }
+
+/* ======================= QUIZ ======================= */
+function startQuiz(lesson){
+  state.quizIndex = 0;
+  state.quizCorrectCount = 0;
+  state.quizAnswers = new Array(lesson.quiz.length).fill(null);
+  renderQuizQuestion(lesson);
+}
+
+function renderQuizQuestion(lesson){
+  const body = document.getElementById('lessonBody');
+  const total = lesson.quiz.length;
+  const idx = state.quizIndex;
+  const q = lesson.quiz[idx];
+
+  const dots = lesson.quiz.map((_,i) => {
+    let cls = 'dot';
+    if(state.quizAnswers[i] === 'correct') cls += ' done';
+    else if(state.quizAnswers[i] === 'wrong') cls += ' wrong';
+    else if(i === idx) cls += ' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+
+  body.innerHTML = `
+    <div class="quiz-dots">${dots}</div>
+    <div class="quiz-q sa-read">${q.q}<span class="en-hint">Question ${idx+1} / ${total}</span></div>
+    <div class="quiz-options" id="quizOptions">
+      ${q.opts.map((o,i) => `<button class="opt-btn" data-i="${i}" onclick="answerQuiz(${i})">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <div class="quiz-actions" id="quizActions"></div>
+  `;
+  document.documentElement.style.setProperty('--accent', lesson.accentHex);
+}
+
+function answerQuiz(choiceIndex){
+  const lesson = getLesson(state.currentLessonId);
+  const idx = state.quizIndex;
+  if(state.quizAnswers[idx] !== null) return; // already answered
+  const q = lesson.quiz[idx];
+  const correct = choiceIndex === q.answer;
+  state.quizAnswers[idx] = correct ? 'correct' : 'wrong';
+  if(correct) state.quizCorrectCount++;
+
+  document.querySelectorAll('#quizOptions .opt-btn').forEach((btn,i) => {
+    btn.setAttribute('disabled','true');
+    if(i === q.answer) btn.classList.add('correct');
+    else if(i === choiceIndex) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('quizFeedback');
+  fb.textContent = correct ? 'Correct! Well done 🎉' : `Correct answer: ${q.opts[q.answer]}`;
+  fb.className = 'quiz-feedback ' + (correct ? 'ok' : 'no');
+
+  const actions = document.getElementById('quizActions');
+  const isLast = idx === lesson.quiz.length - 1;
+  actions.innerHTML = `<button class="primary-btn" onclick="${isLast ? 'finishQuiz()' : 'nextQuizQuestion()'}">${isLast ? 'See Results' : 'Next Question →'}</button>`;
+}
+
+function nextQuizQuestion(){
+  state.quizIndex++;
+  renderQuizQuestion(getLesson(state.currentLessonId));
+}
+
+function finishQuiz(){
+  const lesson = getLesson(state.currentLessonId);
+  const total = lesson.quiz.length;
+  const pct = state.quizCorrectCount / total;
+  let stars = 0;
+  if(pct >= 0.9) stars = 3;
+  else if(pct >= 0.7) stars = 2;
+  else if(pct >= 0.5) stars = 1;
+
+  const prevStars = state.progress[lesson.id].stars;
+  if(stars > prevStars){
+    state.xp += (stars - prevStars) * 10;
+    state.progress[lesson.id].stars = stars;
+  }
+  if(stars >= 2) state.progress[lesson.id].done = true;
+
+  renderResults(lesson, stars, total);
+  renderDiyas();
+}
+
+function renderResults(lesson, stars, total){
+  const body = document.getElementById('lessonBody');
+  const starsHtml = [1,2,3].map(n => `<span class="${n<=stars?'on':''}">★</span>`).join('');
+  const messages = [
+    'Keep practicing — give it another try!',
+    'Good effort! Practice once more.',
+    'Great job! Your lamp is lit.',
+    'Excellent! Perfect score — wow!'
+  ];
+  body.innerHTML = `
+    <div class="results-wrap">
+      <div class="chart-title sa" style="font-size:14px; opacity:0.7;">Results</div>
+      <div class="results-stars">${starsHtml}</div>
+      <div class="results-score">${state.quizCorrectCount} / ${total} correct</div>
+      <div class="results-sub">${messages[stars]}</div>
+      <div class="results-actions">
+        <button class="ghost-btn" onclick="switchTab('quiz')">Retry Quiz</button>
+        <button class="primary-btn" onclick="goHome()">Home</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ======================= INIT ======================= */
+renderDiyas();
+renderHome();
+</script>
+</body>
+</html>
